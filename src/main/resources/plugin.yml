@@ -1,0 +1,24 @@
+name: GlowWoodCutter
+version: '${project.version}'
+main: pluginsfix.glowwoodcutter.GlowWoodCutter
+api-version: '1.16'
+author: pluginsfix
+depend:
+  - WorldEdit
+  - WorldGuard
+softdepend:
+  - PlaceholderAPI
+commands:
+  glowwoodcutter:
+    description: Main command for GlowWoodCutter
+    permission: glowwoodcutter.admin
+    aliases:
+      - gwoodcutter
+      - woodcutter
+permissions:
+  glowwoodcutter.admin:
+    description: Access to administrative commands of GlowWoodCutter
+    default: op
+  glowwoodcutter.cutting:
+    description: Permission to cut wood in designated zones
+    default: true

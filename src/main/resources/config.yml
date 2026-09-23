@@ -1,0 +1,93 @@
+settings:
+  unknown: "отсутствует"
+  bossbarAction:
+    safeFloat: 1.0
+    safeOverlay: "PROGRESS"
+    safeColor: "YELLOW"
+  titleAction:
+    oneD: 3000
+    twoD: 3000
+    threeD: 4500
+  soundAction:
+    safeVolume: 0.5
+    safePitch: 1.0
+  particleAction:
+    safeCount: 20
+    safeOffSetX: 0.1
+    safeOffSetY: 0.1
+    safeOffSetZ: 0.1
+    safeSpeed: 0.1
+  achivementAction:
+    safeIcon: "minecraft:bedrock"
+    safeDescription: "@pluginsfix"
+  cuttingZones:
+    1:
+      world: spawn
+      region: cutting1
+      drop: true
+      restore: true
+      restoreTime: 30
+      actions:
+        - "[Console] eco give {player} 5"
+    2:
+      world: spawn
+      region: cutting2
+      drop: true
+      restore: true
+      restoreTime: 10
+      actions:
+        - "[Console] eco give {player} 3"
+    3:
+      world: spawn
+      region: cutting3
+      drop: true
+      restore: true
+      restoreTime: 20
+      actions:
+        - "[Console] eco give {player} 4"
+    4:
+      world: spawn
+      region: cutting4
+      drop: true
+      restore: true
+      restoreTime: 20
+      actions:
+        - "[Console] eco give {player} 4"
+    5:
+      world: spawn
+      region: cutting5
+      drop: true
+      restore: true
+      restoreTime: 30
+      actions:
+        - "[Console] eco give {player} 5"
+    6:
+      world: spawn
+      region: cutting6
+      drop: true
+      restore: true
+      restoreTime: 10
+      actions:
+        - "[Console] eco give {player} 3"
+    7:
+      world: spawn
+      region: cutting7
+      drop: true
+      restore: true
+      restoreTime: 20
+      actions:
+        - "[Console] eco give {player} 4"
+actions:
+  noPermsForBreak:
+    - "[Message] #FF8AD8&lСЕРВЕР&7: &fУ вас #FFD1F7недостаточно &fправ!"
+  handleReloaded:
+    - "[Message] #FF8AD8&lСЕРВЕР&7: &fКонфигурация #FFD1F7успешно &fперезагружена!"
+  handleRestored:
+    - "[Message] #FF8AD8&lСЕРВЕР&7: &fБлоки #FFD1F7успешно &fвосстановлены!"
+  handleHelp:
+    - "[Message] #FF8AD8╔ [HoverText:url https://t.me/pluginsfix, text: &fМой #FFD1F7ТГК&f канал]"
+    - "[Message] #FF8AD8║ &f/glowwoodcutter reload &7(Обновить конфиг) [HoverText:cmd /glowwoodcutter reload, text: &r]"
+    - "[Message] #FF8AD8║ &f/glowwoodcutter restore &7(Обновить блоки) [HoverText:cmd /glowwoodcutter restore, text: &r]"
+    - "[Message] #FF8AD8╚ [HoverText:url https://t.me/pluginsfix, text: &fМой #FFD1F7ТГК&f канал]"
+  handleNoPerms:
+    - "[Message] #FF8AD8&lСЕРВЕР&7: &fУ вас #FFD1F7недостаточно &fправ!"
