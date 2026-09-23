@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public final class TextFormatter {
     private static final Pattern HEX_PATTERN_1 = Pattern.compile("&#([A-Fa-f0-9]{6})");
     private static final Pattern HEX_PATTERN_2 = Pattern.compile("#([A-Fa-f0-9]{6})");
-    private static final Pattern HOVER_PATTERN = Pattern.compile("\\[HoverText:(url|cmd|suggest)\\s+([^,]+),\\s*text:\\s*([^\\]]+)\\]");
+    private static final Pattern HOVER_PATTERN = Pattern.compile("\\[HoverText:(url|cmd|suggest)\\s+([^,]+),\\s*text:\\s*([^\\]]*)\\]");
 
     private TextFormatter() {
     }
@@ -99,9 +99,8 @@ public final class TextFormatter {
 
             String actionType = matcher.group(1).trim().toLowerCase();
             String actionValue = matcher.group(2).trim();
-            String hoverText = colorize(matcher.group(3).trim());
+            String rawHover = matcher.group(3).trim();
 
-            BaseComponent[] hoverBody = TextComponent.fromLegacyText(hoverText);
             ClickEvent clickEvent = switch (actionType) {
                 case "url" -> new ClickEvent(ClickEvent.Action.OPEN_URL, actionValue);
                 case "cmd" -> new ClickEvent(ClickEvent.Action.RUN_COMMAND, actionValue);
@@ -109,19 +108,29 @@ public final class TextFormatter {
                 default -> null;
             };
 
-            HoverEvent hoverEvent;
-            try {
-                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hoverBody));
-            } catch (Throwable throwable) {
-                hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverBody);
-            }
+            String displayText = rawHover.isEmpty() ? "" : colorize(rawHover);
+            if (!displayText.isEmpty()) {
+                BaseComponent[] visibleComponents = TextComponent.fromLegacyText(displayText);
+                BaseComponent[] tooltipComponents = TextComponent.fromLegacyText(displayText);
 
-            for (BaseComponent comp : hoverBody) {
-                if (clickEvent != null) {
+                HoverEvent hoverEvent;
+                try {
+                    hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(tooltipComponents));
+                } catch (Throwable throwable) {
+                    hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltipComponents);
+                }
+
+                for (BaseComponent comp : visibleComponents) {
+                    if (clickEvent != null) {
+                        comp.setClickEvent(clickEvent);
+                    }
+                    comp.setHoverEvent(hoverEvent);
+                    result.add(comp);
+                }
+            } else if (clickEvent != null && !result.isEmpty()) {
+                for (BaseComponent comp : result) {
                     comp.setClickEvent(clickEvent);
                 }
-                comp.setHoverEvent(hoverEvent);
-                result.add(comp);
             }
 
             lastEnd = matcher.end();
